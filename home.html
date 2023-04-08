@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+
+</head>
+<body>
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+  <div class="w3-row w3-large">
+    <div class="w3-col s3">
+      
+      <a href="/" class="w3-button w3-block"> < Home</a>
+    </div>
+    <div class="w3-col s3" style="float:right!important;">
+      
+      <a href="/contact" class="w3-button w3-block"> Contact ></a>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="w3-content" style="max-width:1100px;">
+
+  <!-- Contact -->
+  <div class="w3-center w3-padding-64" id="contact">
+    <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Book an Appointment</span>
+  </div>
+
+  <form>
+    <div class="row">
+      <div class="col-6">
+        <label for="">Enter your name</label>
+        <input type="text" class="form-control" placeholder="enter name" required>
+      </div>
+      <div class="col-6">
+        <label for="">Account Number</label>
+        <input type="text" class="form-control" id="accountInput" readonly>
+      </div>
+      <div class="col-6 mt-3">
+        <label for="">Select Date</label>
+        <input type="date" class="form-control" required>
+      </div>
+      <div class="col-6 mt-3">
+        <label for="">Select Plan Type</label>
+        <select class="form-control" name="select_oplan">
+          <option value="0.000015">Basic (0.000015 ETH) </option>
+          <option value="0.000020">Pro (0.000020 ETH)</option>
+          <option value="0.000025">Premium (0.000025 ETH)</option>
+        </select>
+      </div>
+
+    </div>
+    <button class="btn btn-primary mt-4">Book Appointment</button>
+  </form>
+  
+  <div id="appointment"></div>
+  
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Current Account Balance
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Account Number: <span id="displayNumber"></span></h5>
+          <a href="javascript:void(0)" style="display:none;" id="displayBalance" class="btn btn-primary"></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Send Ether to a Friend</h5>
+          <form>
+            <div class="row">
+              <div class="col-6">
+                <label for="">Enter account Number</label>
+                <input type="text" class="form-control" placeholder="enter account number" required>
+              </div>
+              <div class="col-6">
+                <label for="">Enter Ether Amount</label>
+                <input type="text" class="form-control" placeholder="enter ether amount" readonly>
+              </div>
+           
+        
+            </div>
+            <button class="btn btn-primary mt-4">Send</button>
+          </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/metamask.js"></script>
+
+</body>
+</html>
