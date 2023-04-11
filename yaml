@@ -1,0 +1,55 @@
+# This is an example AWS CodePipeline YAML file for a GitHub-based CI/CD pipeline
+
+# Define the pipeline stages
+stages:
+  - name: Source
+    # Define the source stage
+    actions:
+      - name: Checkout_Source
+        # Use the GitHub provider to pull code from GitHub
+        actionTypeId:
+          category: Source
+          owner: ThirdParty
+          provider: GitHub
+          version: '1'
+        configuration:
+          Owner: YOUR_GITHUB_OWNER
+          Repo: YOUR_GITHUB_REPO
+          Branch: YOUR_GITHUB_BRANCH
+          OAuthToken: YOUR_GITHUB_OAUTH_TOKEN
+        outputArtifacts:
+          - name: Source_Code
+        runOrder: 1
+  - name: Build
+    # Define the build stage
+    actions:
+      - name: Build
+        # Use the AWS CodeBuild provider to build the code
+        actionTypeId:
+          category: Build
+          owner: AWS
+          provider: CodeBuild
+          version: '1'
+        configuration:
+          ProjectName: YOUR_CODEBUILD_PROJECT_NAME
+        inputArtifacts:
+          - name: Source_Code
+        outputArtifacts:
+          - name: Build_Output
+        runOrder: 1
+  - name: Deploy
+    # Define the deploy stage
+    actions:
+      - name: Deploy
+        # Use the AWS Elastic Beanstalk provider to deploy the code
+        actionTypeId:
+          category: Deploy
+          owner: AWS
+          provider: ElasticBeanstalk
+          version: '1'
+        configuration:
+          ApplicationName: YOUR_ELASTIC_BEANSTALK_APP_NAME
+          EnvironmentName: YOUR_ELASTIC_BEANSTALK_ENV_NAME
+        inputArtifacts:
+          - name: Build_Output
+        runOrder: 1
