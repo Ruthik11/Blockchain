@@ -13,9 +13,9 @@ stages:
           provider: GitHub
           version: '1'
         configuration:
-          Owner: YOUR_GITHUB_OWNER
-          Repo: YOUR_GITHUB_REPO
-          Branch: YOUR_GITHUB_BRANCH
+          Owner: Ruthik11
+          Repo: Blockchain
+          Branch: main
           OAuthToken: YOUR_GITHUB_OAUTH_TOKEN
         outputArtifacts:
           - name: Source_Code
@@ -31,7 +31,7 @@ stages:
           provider: CodeBuild
           version: '1'
         configuration:
-          ProjectName: YOUR_CODEBUILD_PROJECT_NAME
+          ProjectName: ruthik-test-devops-01
         inputArtifacts:
           - name: Source_Code
         outputArtifacts:
@@ -48,8 +48,8 @@ stages:
           provider: ElasticBeanstalk
           version: '1'
         configuration:
-          ApplicationName: YOUR_ELASTIC_BEANSTALK_APP_NAME
-          EnvironmentName: YOUR_ELASTIC_BEANSTALK_ENV_NAME
+          ApplicationName: ruthik-devops-test-01
+          EnvironmentName: Ruthik-devops-test-01-env
         inputArtifacts:
           - name: Build_Output
         runOrder: 1
