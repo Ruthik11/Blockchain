@@ -1,55 +1,28 @@
-# This is an example AWS CodePipeline YAML file for a GitHub-based CI/CD pipeline
+name: Node.js CI
 
-# Define the pipeline stages
-stages:
-  - name: Source
-    # Define the source stage
-    actions:
-      - name: Checkout_Source
-        # Use the GitHub provider to pull code from GitHub
-        actionTypeId:
-          category: Source
-          owner: ThirdParty
-          provider: GitHub
-          version: '1'
-        configuration:
-          Owner: Ruthik11
-          Repo: Blockchain
-          Branch: main
-          OAuthToken: YOUR_GITHUB_OAUTH_TOKEN
-        outputArtifacts:
-          - name: Source_Code
-        runOrder: 1
-  - name: Build
-    # Define the build stage
-    actions:
-      - name: Build
-        # Use the AWS CodeBuild provider to build the code
-        actionTypeId:
-          category: Build
-          owner: AWS
-          provider: CodeBuild
-          version: '1'
-        configuration:
-          ProjectName: ruthik-test-devops-01
-        inputArtifacts:
-          - name: Source_Code
-        outputArtifacts:
-          - name: Build_Output
-        runOrder: 1
-  - name: Deploy
-    # Define the deploy stage
-    actions:
-      - name: Deploy
-        # Use the AWS Elastic Beanstalk provider to deploy the code
-        actionTypeId:
-          category: Deploy
-          owner: AWS
-          provider: ElasticBeanstalk
-          version: '1'
-        configuration:
-          ApplicationName: ruthik-devops-test-01
-          EnvironmentName: Ruthik-devops-test-01-env
-        inputArtifacts:
-          - name: Build_Output
-        runOrder: 1
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
